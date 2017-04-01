@@ -11,6 +11,7 @@
     <pl.digitalzombielab.dayview.DayView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:barColor="@color/colorAccent"
         android:id="@+id/dayView"/>
 
 </android.support.constraint.ConstraintLayout>

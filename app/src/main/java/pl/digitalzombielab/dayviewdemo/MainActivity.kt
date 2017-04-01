@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import pl.digitalzombielab.dayview.DayView
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         val dayView = findViewById(R.id.dayView) as DayView
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+        dayView.date = Date()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
+import java.util.*
 
 
 /**
@@ -15,11 +17,34 @@ import android.view.View
 
 class DayView : View {
 
+    var barColor = -12627531
+    var textColor = -16777216
+    var cardBackgroundColor = -1
+    var borderColor = -2302756
+    var date = Date()
+
     private val paint = Paint()
     private val rect = Rect()
 
     constructor(ctx: Context) : super(ctx)
-    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
+    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs) {
+        val a = context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.DayView,
+                0, 0)
+        val typedValue = TypedValue()
+        val theme = context.theme
+        try {
+            if (theme.resolveAttribute(R.attr.colorPrimary, typedValue, true))
+                barColor = typedValue.data
+            barColor = a.getColor(R.styleable.DayView_barColor, barColor)
+            textColor = a.getColor(R.styleable.DayView_textColor, textColor)
+            cardBackgroundColor = a.getColor(R.styleable.DayView_cardBackgroundColor, cardBackgroundColor)
+            borderColor = a.getColor(R.styleable.DayView_borderColor, borderColor)
+        } finally {
+            a.recycle()
+        }
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
