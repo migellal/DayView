@@ -1,5 +1,6 @@
 package pl.digitalzombielab.dayview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -17,16 +18,53 @@ import java.util.*
 
 class DayView : View {
 
-    var barColor = -12627531
-    var textColor = -16777216
-    var cardBackgroundColor = -1
-    var borderColor = -2302756
-    var date = Date()
+    private var barPaint = Paint()
+    private var textDayPaint = Paint()
+    private var textMonthPaint = Paint()
+    private var backgroundPaint = Paint()
+    private var borderPaint = Paint()
+    private var day = String()
+    private var month = String()
 
-    private val paint = Paint()
+    var barColor = -12627531
+        set(value) {
+            field = value
+            barPaint.color = value
+            invalidate()
+        }
+    var textColor = -16777216
+        set(value) {
+            field = value
+            textDayPaint.color = value
+            textMonthPaint.color = value
+            invalidate()
+        }
+    var cardBackgroundColor = -1
+        set(value) {
+            field = value
+            backgroundPaint.color = value
+            invalidate()
+        }
+    var borderColor = -2302756
+        set(value) {
+            field = value
+            borderPaint.color = value
+            invalidate()
+        }
+    var date = Date()
+        set(value) {
+            field = value
+            day = date.day.toString()
+            month = date.month.toString()
+            invalidate()
+        }
+
     private val rect = Rect()
 
-    constructor(ctx: Context) : super(ctx)
+    constructor(ctx: Context) : super(ctx) {
+        init()
+    }
+
     constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs) {
         val a = context.theme.obtainStyledAttributes(
                 attrs,
@@ -44,14 +82,37 @@ class DayView : View {
         } finally {
             a.recycle()
         }
+        init()
     }
 
+    private fun init() {
+        backgroundPaint.color = cardBackgroundColor
+        borderPaint.color = borderColor
+        barPaint.color = barColor
+        textDayPaint.color = textColor
+        textMonthPaint.color = textColor
+        backgroundPaint.style = Paint.Style.FILL
+        borderPaint.style = Paint.Style.STROKE
+        borderPaint.strokeWidth = 10F
+        barPaint.style = Paint.Style.FILL
+
+    }
+
+    @SuppressLint("NewApi")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        paint.color = Color.WHITE
-        paint.style = Paint.Style.FILL
-        canvas?.drawPaint(paint)
-        drawTextCenter(canvas, paint, System.currentTimeMillis().toString())
+        canvas?.drawPaint(backgroundPaint)
+        canvas?.drawRect(50F, 50F, 300F, 300F, borderPaint)
+        canvas?.drawRect(80F, 80F, 350F, 350F, barPaint)
+        canvas?.drawRoundRect(400F, 400F, 800F, 1000F, 50F, 50F, barPaint)
+    }
+
+    override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
+        super.onSizeChanged(xNew, yNew, xOld, yOld)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
     private fun drawTextCenter(canvas: Canvas?, paint: Paint, text: String) {
