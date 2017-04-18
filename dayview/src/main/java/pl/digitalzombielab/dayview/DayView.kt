@@ -1,6 +1,5 @@
 package pl.digitalzombielab.dayview
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -25,6 +24,10 @@ class DayView : View {
     private var borderPaint = Paint()
     private var day = String()
     private var month = String()
+    private var height = 0.0F
+    private var width = 0.0F
+    private var startLeft = 0.0F
+    private var startTop = 0.0F
 
     var barColor = -12627531
         set(value) {
@@ -98,17 +101,23 @@ class DayView : View {
 
     }
 
-    @SuppressLint("NewApi")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        canvas?.drawPaint(backgroundPaint)
-        canvas?.drawRect(50F, 50F, 300F, 300F, borderPaint)
+        canvas?.drawRect(startLeft, startTop, width, height, backgroundPaint)
+        canvas?.drawRect(startLeft, startTop, width, height, borderPaint)
         canvas?.drawRect(80F, 80F, 350F, 350F, barPaint)
-        canvas?.drawRoundRect(400F, 400F, 800F, 1000F, 50F, 50F, barPaint)
     }
 
     override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
         super.onSizeChanged(xNew, yNew, xOld, yOld)
+        width = xNew.toFloat()
+        height = yNew.toFloat()
+        startLeft = paddingLeft.toFloat()
+        startTop = paddingTop.toFloat()
+        val xpad = (paddingLeft + paddingRight).toFloat()
+        val ypad = (paddingTop + paddingBottom).toFloat()
+        width -= xpad
+        height -= ypad
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

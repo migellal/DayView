@@ -6,12 +6,20 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="pl.digitalzombielab.dayviewdemo.MainActivity"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     tools:showIn="@layout/activity_main">
 
     <pl.digitalzombielab.dayview.DayView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barColor="@color/colorAccent"
+        android:paddingLeft="50dp"
+        android:paddingRight="100dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="35dp"
         android:id="@+id/dayView"/>
 
 </android.support.constraint.ConstraintLayout>

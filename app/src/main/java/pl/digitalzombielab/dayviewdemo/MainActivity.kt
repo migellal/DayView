@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         dayView.date = Date()
+        dayView.borderColor = Color.BLACK
         dayView.cardBackgroundColor = Color.YELLOW
         //dayView.borderColor = Color.GREEN
     }
