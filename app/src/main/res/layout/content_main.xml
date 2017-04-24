@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         app:barColor="@color/colorAccent"
         android:paddingLeft="50dp"
-        android:paddingRight="100dp"
+        android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:paddingBottom="35dp"
         android:id="@+id/dayView"/>
