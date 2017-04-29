@@ -21,11 +21,14 @@ class DayView : View {
     private var borderPaint = Paint()
     private var day = String()
     private var month = String()
-    private var height = 0.0F
-    private var width = 0.0F
-    private var startLeft = 0.0F
-    private var startTop = 0.0F
-    private var startBar = 0.0F
+    private var endY = 0.0F
+    private var endX = 0.0F
+    private var startX = 0.0F
+    private var startY = 0.0F
+    private var barY = 0.0F
+    private var angleY = 0.0F
+    private var angleX1 = 0.0F
+    private var angleX2 = 0.0F
 
     var barColor = -12627531
         set(value) {
@@ -103,40 +106,56 @@ class DayView : View {
         super.onDraw(canvas)
         canvas?.drawPath(makeBackgroundPath(), backgroundPaint)
         canvas?.drawPath(makeBorderPath(), borderPaint)
-        //canvas?.drawPath(makeBarPath(), barPaint)
+        canvas?.drawPath(makeBarLeftAnglePath(), barPaint)
+        canvas?.drawPath(makeBarRightAnglePath(), barPaint)
+        //canvas?.drawPath(makeBarCenterPath(), barPaint)
     }
 
     override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
         super.onSizeChanged(xNew, yNew, xOld, yOld)
-        width = xNew.toFloat()
-        height = yNew.toFloat()
-        startLeft = paddingLeft.toFloat()
-        startTop = paddingTop.toFloat()
-        width -= paddingRight
-        height -= paddingTop
-        startBar = height / 6
+        endX = xNew.toFloat()
+        endY = yNew.toFloat()
+        startX = paddingLeft.toFloat()
+        startY = paddingTop.toFloat()
+        endX -= paddingRight
+        endY -= paddingTop
+        barY = (endY - startY) / 6
+        angleY = barY / 2
+        angleX1 = startX + angleY
+        angleX2 = endX - angleY
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    private fun makeBarPath(): Path {
-        val path = Path()
-        path.moveTo(startLeft, startBar)
-        path.lineTo(startLeft, startTop)
-        path.lineTo(width + 1, startTop)
-        path.lineTo(width + 1, startBar)
-        path.close()
-        return path
+    private fun makeBarLeftAnglePath(): Path {
+        val pathLeftAngle = Path()
+        pathLeftAngle.moveTo(startX, barY)
+        pathLeftAngle.lineTo(startX, angleY)
+        pathLeftAngle.cubicTo(startX, angleY, startX, startY, angleX1, startY)
+        pathLeftAngle.lineTo(angleX2+1, startY)
+        pathLeftAngle.lineTo(angleX2+1, barY)
+        pathLeftAngle.close()
+        return pathLeftAngle
+    }
+
+    private fun makeBarRightAnglePath(): Path {
+        val pathRightAngle = Path()
+        pathRightAngle.moveTo(endX + 1, barY)
+        pathRightAngle.lineTo(endX + 1, angleY)
+        pathRightAngle.cubicTo(endX + 1, angleY, endX + 1, startY, angleX2, startY)
+        pathRightAngle.lineTo(angleX2, barY)
+        pathRightAngle.close()
+        return pathRightAngle
     }
 
     private fun makeBorderPath(): Path {
         val path = Path()
-        path.moveTo(startLeft, startBar)
-        path.lineTo(startLeft, height)
-        path.lineTo(width, height)
-        path.lineTo(width, startBar)
+        path.moveTo(startX, barY)
+        path.lineTo(startX, endY)
+        path.lineTo(endX, endY)
+        path.lineTo(endX, barY)
         return path
     }
 
@@ -158,5 +177,38 @@ class DayView : View {
         val y = cHeight / 2f + rect.height() / 2f - rect.bottom
         canvas!!.drawText(text, x, y, paint)
     }
+
+/*
+    override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
+    super.onSizeChanged(xNew, yNew, xOld, yOld)
+    endX = xNew.toFloat()
+    endY = yNew.toFloat()
+    startX = paddingLeft.toFloat()
+    startY = paddingTop.toFloat()
+    endX -= paddingRight
+    endY -= paddingTop
+    barY = endY / 6
+    angleY = barY / 5
+    angleX1 = startX + 80
+    angleX2 = endX - 80
+}
+
+override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+}
+
+private fun makeBarLeftAnglePath(): Path {
+    val path = Path()
+    path.moveTo(startX, barY)
+    //path.lineTo(startX, angleY)
+    path.cubicTo(startX, angleY, startX, startY, angleX1, startY)
+    path.lineTo(angleX1, startY)
+    path.lineTo(angleX2, startY)
+    path.cubicTo(angleX2, startY, endX, startY, endX + 1, barY)
+    path.lineTo(endX + 1, barY)
+    path.close()
+    return path
+}
+*/
 
 }
