@@ -1,10 +1,14 @@
 package pl.digitalzombielab.dayview
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import java.text.DateFormatSymbols
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -29,6 +33,8 @@ class DayView : View {
     private var angleY = 0.0F
     private var angleX1 = 0.0F
     private var angleX2 = 0.0F
+    private var monthFormat = SimpleDateFormat("M")
+    private var dayFormat = SimpleDateFormat("d")
 
     var barColor = -12627531
         set(value) {
@@ -58,12 +64,10 @@ class DayView : View {
     var date = Date()
         set(value) {
             field = value
-            day = date.day.toString()
-            month = date.month.toString()
+            day = dayFormat.format(value)
+            month = getMonth(monthFormat.format(value).toInt())
             invalidate()
         }
-
-    private val rect = Rect()
 
     constructor(ctx: Context) : super(ctx) {
         init()
@@ -93,8 +97,13 @@ class DayView : View {
         backgroundPaint.color = cardBackgroundColor
         borderPaint.color = borderColor
         barPaint.color = barColor
+        barPaint.setAntiAlias(true)
         textDayPaint.color = textColor
+        textDayPaint.setTextAlign(Paint.Align.CENTER)
+        textDayPaint.setAntiAlias(true)
         textMonthPaint.color = textColor
+        textMonthPaint.setTextAlign(Paint.Align.CENTER)
+        textMonthPaint.setAntiAlias(true)
         backgroundPaint.style = Paint.Style.FILL
         borderPaint.style = Paint.Style.STROKE
         borderPaint.strokeWidth = 1F
@@ -108,7 +117,7 @@ class DayView : View {
         canvas?.drawPath(makeBorderPath(), borderPaint)
         canvas?.drawPath(makeBarLeftAnglePath(), barPaint)
         canvas?.drawPath(makeBarRightAnglePath(), barPaint)
-        //canvas?.drawPath(makeBarCenterPath(), barPaint)
+        drawTextCenter(canvas)
     }
 
     override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
@@ -118,7 +127,7 @@ class DayView : View {
         startX = paddingLeft.toFloat()
         startY = paddingTop.toFloat()
         endX -= paddingRight
-        endY -= paddingTop
+        endY -= paddingBottom
         barY = (endY - startY) / 6
         angleY = barY / 2
         angleX1 = startX + angleY
@@ -134,8 +143,8 @@ class DayView : View {
         pathLeftAngle.moveTo(startX, barY)
         pathLeftAngle.lineTo(startX, angleY)
         pathLeftAngle.cubicTo(startX, angleY, startX, startY, angleX1, startY)
-        pathLeftAngle.lineTo(angleX2+1, startY)
-        pathLeftAngle.lineTo(angleX2+1, barY)
+        pathLeftAngle.lineTo(angleX2 + 1, startY)
+        pathLeftAngle.lineTo(angleX2 + 1, barY)
         pathLeftAngle.close()
         return pathLeftAngle
     }
@@ -165,50 +174,23 @@ class DayView : View {
         return path
     }
 
-    private fun drawTextCenter(canvas: Canvas?, paint: Paint, text: String) {
-        canvas?.getClipBounds(rect)
-        val cHeight = rect.height()
-        val cWidth = rect.width()
-        paint.setTextAlign(Paint.Align.LEFT)
-        paint.color = Color.BLACK
-        paint.textSize = 40f
-        paint.getTextBounds(text, 0, text.length, rect)
-        val x = cWidth / 2f - rect.width() / 2f - rect.left
-        val y = cHeight / 2f + rect.height() / 2f - rect.bottom
-        canvas!!.drawText(text, x, y, paint)
+    private fun drawTextCenter(canvas: Canvas?) {
+        val shortMonthName = month.length <= 4
+        val x = canvas!!.width.toFloat() / 2
+        val y = (endY - barY) / 5
+        textDayPaint.textSize = 2 * y
+        canvas.drawText(day, x, barY + (2.5 * y).toFloat(), textDayPaint)
+        if (shortMonthName) {
+            textMonthPaint.textSize = y
+            canvas.drawText(month, x, barY + (3.5 * y).toFloat(), textMonthPaint)
+        } else {
+            textMonthPaint.textSize = y / 2
+            canvas.drawText(month, x, barY + (3.1 * y).toFloat(), textMonthPaint)
+        }
     }
 
-/*
-    override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
-    super.onSizeChanged(xNew, yNew, xOld, yOld)
-    endX = xNew.toFloat()
-    endY = yNew.toFloat()
-    startX = paddingLeft.toFloat()
-    startY = paddingTop.toFloat()
-    endX -= paddingRight
-    endY -= paddingTop
-    barY = endY / 6
-    angleY = barY / 5
-    angleX1 = startX + 80
-    angleX2 = endX - 80
-}
-
-override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-}
-
-private fun makeBarLeftAnglePath(): Path {
-    val path = Path()
-    path.moveTo(startX, barY)
-    //path.lineTo(startX, angleY)
-    path.cubicTo(startX, angleY, startX, startY, angleX1, startY)
-    path.lineTo(angleX1, startY)
-    path.lineTo(angleX2, startY)
-    path.cubicTo(angleX2, startY, endX, startY, endX + 1, barY)
-    path.lineTo(endX + 1, barY)
-    path.close()
-    return path
-}
-*/
+    private fun getMonth(month: Int): String {
+        return DateFormatSymbols().months[month - 1]
+    }
 
 }

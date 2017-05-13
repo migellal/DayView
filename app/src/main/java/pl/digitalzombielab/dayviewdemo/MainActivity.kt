@@ -1,6 +1,5 @@
 package pl.digitalzombielab.dayviewdemo
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        dayView.date = Date()
+        dayView.date = Date(2017, 11, 25)
         //dayView.borderColor = Color.BLACK
         //dayView.cardBackgroundColor = Color.YELLOW
         //dayView.borderColor = Color.GREEN
