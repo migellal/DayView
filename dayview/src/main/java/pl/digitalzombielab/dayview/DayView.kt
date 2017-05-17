@@ -108,7 +108,10 @@ class DayView : View {
         borderPaint.style = Paint.Style.STROKE
         borderPaint.strokeWidth = 1F
         barPaint.style = Paint.Style.FILL
-
+        if(day.isEmpty() && month.isEmpty()) {
+            day = dayFormat.format(Date())
+            month = getMonth(monthFormat.format(Date()).toInt())
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {

@@ -65,45 +65,43 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="day"
-        android:layout_above="@+id/borderColor_btn"
+        android:layout_alignBaseline="@+id/borderColor_btn"
+        android:layout_alignBottom="@+id/borderColor_btn"
         android:layout_alignLeft="@+id/dayView2"
-        android:layout_alignStart="@+id/dayView2"
-        android:layout_toLeftOf="@+id/apply_btn"
-        android:layout_toStartOf="@+id/apply_btn" />
+        android:layout_alignStart="@+id/dayView2" />
 
     <EditText
         android:id="@+id/month_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:hint="month"
-        android:layout_alignBaseline="@+id/borderColor_btn"
-        android:layout_alignBottom="@+id/borderColor_btn"
-        android:layout_toLeftOf="@+id/apply_btn"
-        android:layout_alignLeft="@+id/day_et"
-        android:layout_alignStart="@+id/day_et" />
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/day_et"
+        android:layout_alignBottom="@+id/day_et"
+        android:layout_toRightOf="@+id/day_et"
+        android:layout_toEndOf="@+id/day_et" />
 
     <pl.digitalzombielab.dayview.DayView
         android:id="@+id/dayView"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/barColor_btn"
         android:layout_toLeftOf="@+id/dayView2"
-        android:layout_toStartOf="@+id/dayView2"
-        android:layout_above="@+id/barColor_btn" />
+        android:layout_toStartOf="@+id/dayView2" />
 
     <pl.digitalzombielab.dayview.DayView
         android:id="@+id/dayView2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/borderColor_btn"
         android:layout_toRightOf="@+id/borderColor_btn"
-        android:layout_above="@+id/barColor_btn" />
+        android:layout_above="@+id/apply_btn" />
 
     <TextView
         android:id="@+id/url_tv"
@@ -111,10 +109,8 @@
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:text="https://github.com/migellal/DayView"
-        android:layout_alignBaseline="@+id/barColor_btn"
-        android:layout_alignBottom="@+id/barColor_btn"
-        android:layout_alignLeft="@+id/dayView2"
-        android:layout_alignStart="@+id/dayView2"
-        android:layout_alignRight="@+id/day_et"
-        android:layout_alignEnd="@+id/day_et" />
+        android:layout_alignBaseline="@+id/apply_btn"
+        android:layout_alignBottom="@+id/apply_btn"
+        android:layout_toLeftOf="@+id/apply_btn"
+        android:layout_toStartOf="@+id/apply_btn" />
 </RelativeLayout>
