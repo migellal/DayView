@@ -18,8 +18,6 @@ import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
 
-    var dayView: DayView? = null
-    var dayView2: DayView? = null
     var applyBtn: Button? = null
     var borderBtn: Button? = null
     var backgroundBtn: Button? = null
@@ -40,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        dayView = findViewById(R.id.dayView) as DayView
-        dayView2 = findViewById(R.id.dayView2) as DayView
+        val dayView = findViewById(R.id.dayView) as DayView
+        val dayView2 = findViewById(R.id.dayView2) as DayView
         applyBtn = findViewById(R.id.apply_btn) as Button
         borderBtn = findViewById(R.id.borderColor_btn) as Button
         backgroundBtn = findViewById(R.id.backgroundColor_btn) as Button
@@ -64,16 +62,16 @@ class MainActivity : AppCompatActivity() {
                 month -= 1
             }
             date = Date(year, month, day)
-            dayView!!.date = date
-            dayView!!.borderColor = borderColor
-            dayView!!.cardBackgroundColor = backgroundColor
-            dayView!!.textColor = textColor
-            dayView!!.barColor = barColor
-            dayView2!!.date = date
-            dayView2!!.borderColor = borderColor
-            dayView2!!.cardBackgroundColor = backgroundColor
-            dayView2!!.textColor = textColor
-            dayView2!!.barColor = barColor
+            dayView.date = date
+            dayView.borderColor = borderColor
+            dayView.cardBackgroundColor = backgroundColor
+            dayView.textColor = textColor
+            dayView.barColor = barColor
+            dayView2.date = date
+            dayView2.borderColor = borderColor
+            dayView2.cardBackgroundColor = backgroundColor
+            dayView2.textColor = textColor
+            dayView2.barColor = barColor
         }
 
         borderBtn!!.setOnClickListener {
