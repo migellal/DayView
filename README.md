@@ -24,6 +24,37 @@ This simple Kotlin library can shows specific date in calendar board view. View 
 | textColor           | setTextColor()           | textColor           | default black                                        |
 |                     | setDate()                | date                | should show month in user lang, default current date |
 
+## Examples
+
+#### Java
+
+        DayView dayView = (DayView) findViewById(R.id.dayView);
+        dayView.setBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        dayView.setBorderColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        dayView.setCardBackgroundColor(Color.WHITE);
+        dayView.setTextColor(Color.BLACK);
+        dayView.setDate(new Date(2017, 10, 15));
+        
+#### Kotlin
+
+            val dayView = findViewById(R.id.dayView) as DayView
+            dayView.barColor = ContextCompat.getColor(this, R.color.colorPrimary)
+            dayView.borderColor = ContextCompat.getColor(this, R.color.colorPrimary)
+            dayView.cardBackgroundColor = Color.WHITE
+            dayView.textColor = Color.BLACK
+            dayView.date = Date(year, month, day)
+            
+#### XML
+
+    <pl.digitalzombielab.dayview.DayView
+        android:id="@+id/dayView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barColor="@color/colorPrimary"
+        app:borderColor="@color/colorPrimary"
+        app:cardBackgroundColor="@android:color/white"
+        app:textColor="@android:color/black" />
+
 ## Download
 
 _soon_
