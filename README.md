@@ -22,7 +22,7 @@ This simple Kotlin library can shows specific date in calendar board view. View 
 | borderColor         | setBorderColor()         | borderColor         | almost invisible, 1px width                          |
 | cardBackgroundColor | setCardBackgroundColor() | cardBackgroundColor | background inside board, default white               |
 | textColor           | setTextColor()           | textColor           | default black                                        |
-|                     | setDate()                | date                | default current date, should show month in user lang |
+|                     | setDate()                | date                | should show month in user lang, default current date |
 
 ## Download
 
