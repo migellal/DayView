@@ -12,7 +12,7 @@ This library shows the specific day in a calendar board view.
 
 ## Features
 
-This simple Kotlin library can shows specific date in calendar board view. View is flexible that means can be fat or thin, just modify width value. Showing date should be in current user language.
+This simple Kotlin library can show specific date in calendar board view, in the correct format, according to user's language settings. The view is flexible, that means it can be fat or thin - controlled easily through API.
 
 ## API
 
