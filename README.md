@@ -57,7 +57,10 @@ This simple Kotlin library can show specific date in calendar board view, in the
 
 ## Download
 
-_soon_
+You can download [demo from PlayStore](https://play.google.com/store/apps/details?id=pl.digitalzombielab.dayviewdemo), download demo.apk [directly from repo](https://github.com/migellal/DayView/blob/master/app/app-release.apk), and of course use library:
+
+**_compile 'com.github.migellal:dayview:0.0.1'_**
+
 
 License
 --------
